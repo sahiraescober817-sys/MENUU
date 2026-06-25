@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituto - Quiénes Somos</title>
+    <style>
+        /* ==========================================================================
+           1. RESETEO Y VARIABLES DE DISEÑO (PALETA ROJO VINO Y NEGRO)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --negro-profundo: #0a0508;
+            --carbon-oscuro: #160f12;
+            --rojo-vino: #721c24;
+            --rojo-brillante: #a71d2a;
+            --vino-sutil: #f5c6cb;
+            --blanco-puro: #ffffff;
+            --gris-platino: #f8f9fa;
+            --gris-texto: #b8b9c5;
+            --card-bg: rgba(26, 18, 21, 0.9);
+            --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            background-color: var(--negro-profundo);
+            color: var(--gris-platino);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .overlay {
+            min-height: 100vh;
+            background: linear-gradient(180deg, rgba(10, 5, 8, 0.97) 0%, rgba(22, 15, 18, 0.93) 100%);
+            padding-bottom: 80px;
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* ==========================================================================
+           2. BARRA DE NAVEGACIÓN STICKY (COINCIDENTE CON INICIO)
+           ========================================================================== */
+        nav {
+            background: var(--negro-profundo);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid var(--rojo-vino);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu > li {
+            position: relative;
+        }
+
+        .menu li a {
+            color: var(--blanco-puro);
+            text-decoration: none;
+            padding: 22px 28px;
+            display: block;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+        }
+
+        .menu > li > a:hover {
+            color: var(--vino-sutil);
+            background: rgba(167, 29, 42, 0.08);
+        }
+
+        .flecha {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: 6px;
+            vertical-align: middle;
+            border-top: 4px solid var(--blanco-puro);
+            border-right: 4px solid transparent;
+            border-left: 4px solid transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .menu li:hover .flecha {
+            border-top-color: var(--vino-sutil);
+            transform: rotate(-180deg);
+        }
+
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--carbon-oscuro);
+            list-style: none;
+            min-width: 220px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            border-left: 3px solid var(--rojo-brillante);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: var(--transition-smooth);
+        }
+
+        .submenu li a {
+            padding: 14px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .submenu li a:hover {
+            background: rgba(167, 29, 42, 0.15);
+            color: var(--vino-sutil);
+            padding-left: 25px;
+        }
+
+        .menu li:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           3. ENCABEZADO / HERO SECCIÓN
+           ========================================================================== */
+        .encabezado-hero {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 60px;
+            padding-top: 25px;
+        }
+
+        .texto-principal {
+            flex: 1.3;
+        }
+
+        .texto-principal h1 {
+            font-size: 46px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .texto-principal h1 span {
+            color: var(--rojo-brillante);
+            text-shadow: 0 0 20px rgba(167, 29, 42, 0.4);
+        }
+
+        .texto-principal p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--gris-texto);
+            text-align: justify;
+        }
+
+        /* Contenedor del Logo Circular Animado */
+        .seccion-logo {
+            flex: 0.7;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-marcado {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid var(--rojo-vino);
+            box-shadow: 0 0 40px rgba(114, 28, 36, 0.6);
+            animation: entradaLogo 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            background: var(--carbon-oscuro);
+        }
+
+        .logo-marcado img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ==========================================================================
+           4. SECCIONES DINÁMICAS (BLOQUES ALTERNADOS)
+           ========================================================================== */
+        .seccion-tarjeta {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: var(--transition-smooth);
+        }
+
+        .seccion-tarjeta:hover {
+            transform: translateY(-5px);
+            border-color: rgba(167, 29, 42, 0.25);
+        }
+
+        .contenido-seccion {
+            display: flex;
+            align-items: center;
+            gap: 45px;
+        }
+
+        /* Clase para invertir el orden en las secciones pares */
+        .contenido-seccion.invertido {
+            flex-direction: row-reverse;
+        }
+
+        .texto-bloque {
+            flex: 1.2;
+        }
+
+        .texto-bloque h2 {
+            font-size: 26px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Línea de acento estilizada al lado de los títulos */
+        .texto-bloque h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 24px;
+            background: var(--rojo-brillante);
+            margin-right: 12px;
+            border-radius: 2px;
+        }
+
+        .texto-bloque p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--gris-texto);
+            text-align: justify;
+        }
+
+        /* Marcos de fotos rectangulares estilizados */
+        .imagen-bloque {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+        }
+
+        .imagen-bloque img {
+            width: 100%;
+            max-width: 420px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 3px solid var(--rojo-vino);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: var(--transition-smooth);
+        }
+
+        .seccion-tarjeta:hover .imagen-bloque img {
+            border-color: var(--rojo-brillante);
+            transform: scale(1.02);
+        }
+
+        /* ==========================================================================
+           5. BOTÓN VOLVER ESTILIZADO
+           ========================================================================== */
+        .contenedor-boton {
+            text-align: center;
+            padding: 30px 0 10px 0;
+        }
+
+        .btn-volver {
+            display: inline-block;
+            text-decoration: none;
+            background: linear-gradient(135deg, var(--rojo-vino) 0%, var(--rojo-brillante) 100%);
+            color: var(--blanco-puro);
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 20px rgba(114, 28, 36, 0.3);
+            transition: var(--transition-smooth);
+        }
+
+        .btn-volver:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(167, 29, 42, 0.5);
+            color: var(--blanco-puro);
+        }
+
+        /* ==========================================================================
+           6. RESPONSIVE DESIGN (DISEÑO ADAPTABLE)
+           ========================================================================== */
+        @keyframes entradaLogo {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 1024px) {
+            .encabezado-hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 40px;
+            }
+            .texto-principal { width: 100%; }
+            .contenido-seccion, .contenido-seccion.invertido {
+                flex-direction: column-reverse;
+                gap: 35px;
+            }
+            .imagen-bloque img {
+                max-width: 100%;
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+            }
+            .menu li a {
+                padding: 12px 20px;
+            }
+            .submenu {
+                position: relative;
+                top: 0;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                width: 100%;
+                text-align: center;
+                border-left: none;
+                border-top: 1px solid rgba(167, 29, 42, 0.3);
+                background: rgba(0, 0, 0, 0.3);
+            }
+            .menu li:hover .submenu {
+                display: block;
+            }
+            .texto-principal h1 {
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .seccion-tarjeta {
+                padding: 25px 20px;
+            }
+            .logo-marcado {
+                width: 260px;
+                height: 260px;
+            }
+            .imagen-bloque img {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay">
+
+    <nav>
+        <ul class="menu">
+            <li><a href="MENUU.html">Inicio</a></li>
+            <li><a href="Quienes Somos.html">Quiénes Somos</a></li>
+            <li>
+                <a href="#">Carreras <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="Informatica.html">Informática</a></li>
+                    <li><a href="electricidad.html">Electricidad</a></li>
+                    <li><a href="humanidades.html">Ciencias y Humanidades</a></li>
+                    <li><a href="finanzas.html">Contaduría y Finanzas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Áreas Técnicas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="madera.html">Madera</a></li>
+                    <li><a href="Corte Confeccion.html">Costura Hogar</a></li>
+                    <li><a href="Electricidad Area.html">Electricidad</a></li>
+                    <li><a href="Estructuras Metalicas.html">Estructuras Metálicas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Jornadas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="matutina.html">Matutina</a></li>
+                    <li><a href="vespertina.html">Vespertina</a></li>
+                    <li><a href="nocturna.html">Nocturna</a></li>
+                    <li><a href="isemed.html">ISEMED</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="contenedor">
+
+        <header class="encabezado-hero">
+            <div class="texto-principal">
+                <h1><span>Quiénes</span> Somos</h1>
+                <p>
+                    El Instituto José Trinidad Cabañas es una institución educativa firmemente comprometida con la formación integral de estudiantes. Nuestra propuesta se fundamenta sólidamente en valores universales, disciplina constante, excelencia académica y desarrollo profesional continuo para contribuir significativamente al progreso de la sociedad hondureña.
+                </p>
+            </div>
+            <div class="seccion-logo">
+                <div class="logo-marcado">
+                    <img src="c:\Users\nancy\Downloads\jtc.jpeg" alt="Logo">
+                </div>
+            </div>
+        </header>
+
+        <section class="seccion-tarjeta">
+            <div class="contenido-seccion">
+                <div class="texto-bloque">
+                    <h2>Nuestra Historia</h2>
+                    <p>
+                        Fundado de forma visionaria en 1968 por el recordado profesor Ramón Durán Hernández, el instituto ha recorrido un largo e importante camino de evolución constante hasta transformarse formalmente en una de las instituciones de educación media más prestigiosas y trascendentales de toda la región.
+                    </p>
+                </div>
+                <div class="imagen-bloque">
+                    <img src="C:\Users\nancy\Downloads\QUIENES SOMOS.jpeg" alt="Historia del Instituto">
+                </div>
+            </div>
+        </section>
+
+        <section class="seccion-tarjeta">
+            <div class="contenido-seccion invertido">
+                <div class="texto-bloque">
+                    <h2>Biografía Institucional</h2>
+                    <p>
+                        El Instituto José Trinidad Cabañas, estratégicamente ubicado en la ciudad de Olanchito, Yoro, nació con el claro y noble propósito de brindar oportunidades educativas reales a jóvenes y adultos de la zona. Desde sus primeros pasos, se ha caracterizado por un férreo compromiso con la calidad humana y el éxito profesional.
+                        <br><br>
+                        A lo largo de las décadas, la institución ha expandido su infraestructura física y su oferta académica de manera notable. Hoy en día, ofrece múltiples jornadas y prestigiosas modalidades como Bachillerato en Ciencias y Humanidades, Informática, Electricidad, Contaduría y Finanzas, potenciadas por talleres especializados de vanguardia.
+                    </p>
+                </div>
+                <div class="imagen-bloque">
+                    <img src="c:\Users\nancy\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\1AE824C12447F3D7BDF95C26EC78570514B7D464\transfers\2026-25\WhatsApp Image 2026-06-17 at 11.16.46 AM.jpeg" alt="Biografía Institucional">
+                </div>
+            </div>
+        </section>
+
+        <section class="seccion-tarjeta">
+            <div class="contenido-seccion">
+                <div class="texto-bloque">
+                    <h2>Actividades Institucionales</h2>
+                    <p>
+                        Fomentamos activamente la participación en encuentros culturales, torneos deportivos competitivos y magnos desfiles cívicos. Estas actividades no solo complementan el plan de estudios, sino que robustecen el sentido de identidad, liderazgo y los valores éticos que distinguen a cada uno de nuestros estudiantes.
+                    </p>
+                </div>
+                <div class="imagen-bloque">
+                    <img src="C:\Users\nancy\Downloads\OIP.webp" alt="Actividades">
+                </div>
+            </div>
+        </section>
+
+        <section class="seccion-tarjeta">
+            <div class="contenido-seccion invertido">
+                <div class="texto-bloque">
+                    <h2>Impacto en la Comunidad</h2>
+                    <p>
+                        Nuestra mayor huella radica en las exitosas generaciones de profesionales graduados de nuestras aulas. Hombres y mujeres íntegros que hoy lideran proyectos, dirigen empresas y ejercen un rol activo y de gran valor que impulsa decididamente el desarrollo social, técnico y económico de todo el país.
+                    </p>
+                </div>
+                <div class="imagen-bloque">
+                    <img src="c:\Users\nancy\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\1AE824C12447F3D7BDF95C26EC78570514B7D464\transfers\2026-25\WhatsApp Image 2026-06-17 at 10.59.32 AM.jpeg">
+                </div>
+            </div>
+        </section>
+
+        <div class="contenedor-boton">
+            <a href="MENUU.html" class="btn-volver">Volver al Inicio</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
