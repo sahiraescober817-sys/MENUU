@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTP en Informática - Instituto José Trinidad Cabañas</title>
+    <style>
+        /* --- ESTILOS GENERALES Y RESETEO --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* Nota: Reemplaza 'fondo_institucional.jpg' con la ruta de tu imagen real */
+            background: url('fondo_institucional.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+        }
+
+        /* Capa oscura para garantizar la legibilidad del texto */
+        .overlay {
+            min-height: 100vh;
+            background: rgba(15, 23, 42, 0.85); /* Tono azul oscuro/negro elegante */
+            padding-bottom: 60px;
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* --- BARRA DE NAVEGACIÓN (STICKY & DESPLEGABLE) --- */
+        nav {
+            background: #1e293b;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu > li {
+            position: relative;
+        }
+
+        .menu li a {
+            color: #f8fafc;
+            text-decoration: none;
+            padding: 20px 25px;
+            display: block;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .menu > li > a:hover {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        /* Icono de flecha para los desplegables */
+        .flecha::after {
+            content: ' ▼';
+            font-size: 11px;
+            vertical-align: middle;
+        }
+
+        /* Estilos del Submenú */
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1e293b;
+            min-width: 240px;
+            list-style: none;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            border-bottom: 3px solid #38bdf8;
+        }
+
+        .submenu li a {
+            padding: 15px 20px;
+            font-weight: 500;
+            font-size: 15px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .submenu li a:hover {
+            background: #334155;
+            color: #38bdf8;
+            padding-left: 25px; /* Efecto sutil de desplazamiento */
+        }
+
+        /* Mostrar submenú al hacer Hover */
+        .menu li:hover .submenu {
+            display: block;
+        }
+
+        /* --- SECCIÓN ENCABEZADO / INTRODUCCIÓN --- */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            color: #38bdf8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .hero h2 {
+            font-size: 22px;
+            font-weight: 400;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+        }
+
+        .intro-texto {
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: justify;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 5px solid #38bdf8;
+        }
+
+        /* --- SECCIONES DE MATERIAS (DISEÑO EN ZIG-ZAG) --- */
+        .titulo-seccion {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #f8fafc;
+            position: relative;
+        }
+
+        .titulo-seccion::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #38bdf8;
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .materia-tarjeta {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .materia-tarjeta:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Regla de inversión para lograr el efecto Zig-Zag */
+        .materia-tarjeta.reversa {
+            flex-direction: row-reverse;
+        }
+
+        .materia-imagen {
+            flex: 1;
+            text-align: center;
+        }
+
+        .materia-imagen img {
+            width: 100%;
+            max-width: 450px;
+            height: 300px;
+            object-fit: cover; /* Mantiene la proporción recortando de forma elegante */
+            border-radius: 15px;
+            border: 3px solid #38bdf8;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.5);
+        }
+
+        .materia-info {
+            flex: 1.2;
+        }
+
+        .materia-info h3 {
+            font-size: 28px;
+            color: #38bdf8;
+            margin-bottom: 10px;
+        }
+
+        .badge-horas {
+            display: inline-block;
+            background: #0284c7;
+            color: #fff;
+            padding: 6px 15px;
+            font-weight: bold;
+            border-radius: 50px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .materia-info p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #e2e8f0;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        .materia-info ul {
+            list-style-position: inside;
+            margin-top: 10px;
+            color: #cbd5e1;
+        }
+
+        .materia-info ul li {
+            margin-bottom: 5px;
+        }
+
+        /* --- RESPONSIVE DESIGN (DISEÑO ADAPTABLE) --- */
+        @media (max-width: 992px) {
+            .materia-tarjeta, .materia-tarjeta.reversa {
+                flex-direction: column;
+                gap: 30px;
+                padding: 30px;
+            }
+
+            .materia-imagen img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .menu li a {
+                padding: 15px 20px;
+                text-align: left;
+                border-bottom: 1px solid #334155;
+            }
+
+            .submenu {
+                position: relative;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+                background: #0f172a;
+            }
+
+            .submenu li a {
+                padding-left: 40px;
+            }
+            
+            .submenu li a:hover {
+                padding-left: 45px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay">
+
+    <nav>
+        <ul class="menu">
+            <li><a href="MENUU.html">Inicio</a></li>
+            <li><a href="Quienes Somos.html">Quiénes Somos</a></li>
+            <li>
+                <a href="#">Carreras <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="Informatica.html">Informática</a></li>
+                    <li><a href="electricidad.html">Electricidad</a></li>
+                    <li><a href="humanidades.html">Ciencias y Humanidades</a></li>
+                    <li><a href="finanzas.html">Contaduría y Finanzas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Áreas Técnicas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="madera.html">Madera</a></li>
+                    <li><a href="Corte Confeccion.html">Costura Hogar</a></li>
+                    <li><a href="Electricidad Area.html">Electricidad</a></li>
+                    <li><a href="Estructuras Metalicas.html">Estructuras Metálicas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Jornadas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="matutina.html">Matutina</a></li>
+                    <li><a href="vespertina.html">Vespertina</a></li>
+                    <li><a href="nocturna.html">Nocturna</a></li>
+                    <li><a href="isemed.html">ISEMED</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="contenedor">
+        
+        <header class="hero">
+            <h1>Bachillerato Técnico Profesional en Informática</h1>
+            <h2>Instituto José Trinidad Cabañas</h2>
+            <div class="intro-texto">
+                <p>
+                    El <strong>Bachillerato Técnico Profesional en Informática</strong> es una carrera diseñada estratégicamente para responder a las demandas del ecosistema digital global. En la actualidad, la tecnología es la columna vertebral de cualquier industria, convirtiendo a los profesionales de los sistemas en piezas indispensables para la innovación y la automatización. 
+                </p>
+                <br>
+                <p>
+                    A lo largo de su formación, el estudiante adquiere competencias críticas en arquitectura de hardware, diagramación lógica, desarrollo de software web y de escritorio, administración de redes corporativas y la creación de contenidos multimedia competitivos. Además de la preparación técnica, se fomenta activamente el emprendimiento mediante herramientas de gestión corporativa, capacitando a los jóvenes para estructurar sus propias agencias de servicios tecnológicos.
+                </p>
+                <br>
+                <p>
+                    <strong>Oportunidades Futuras:</strong> Al egresar, el estudiante cuenta con el perfil idóneo para incorporarse de inmediato al mercado laboral como desarrollador junior, soporte técnico especializado o administrador de infraestructura de red. Asimismo, posee las bases analíticas fundamentales para continuar con éxito carreras universitarias de alto perfil como Ingeniería en Sistemas, Licenciatura en Informática Administrativa, Telecomunicaciones o Ciberseguridad.
+                </p>
+            </div>
+        </header>
+
+        <section>
+            <h2 class="titulo-seccion">Plan de Estudios Especializado 12vo</h2>
+
+            <div class="materia-tarjeta">
+                <div class="materia-imagen">
+                    <img src="c:\Users\nancy\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\1AE824C12447F3D7BDF95C26EC78570514B7D464\transfers\2026-25\WhatsApp Image 2026-06-17 at 11.07.08 AM.jpeg" alt="Programación y desarrollo de software">
+                </div>
+                <div class="materia-info">
+                    <h3>Programación II</h3>
+                    <span class="badge-horas">11 Horas Semanales</span>
+                    <p>Esta asignatura sumerge al estudiante en el diseño lógico avanzado y el desarrollo de aplicaciones robustas. Se profundiza en lenguajes de programación modernos, enseñando metodologías para crear algoritmos estructurados y limpios que solucionen problemas reales de procesamiento de datos.</p>
+                    <p><strong>Competencias y Aplicación Laboral:</strong> Capacidad para codificar, depurar y optimizar sistemas informáticos. Prepara al estudiante para ejercer tareas de desarrollo de software embebido y creación de herramientas automatizadas empresariales.</p>
+                </div>
+            </div>
+
+            <div class="materia-tarjeta reversa">
+                <div class="materia-imagen">
+                    <img src="C:\Users\nancy\OneDrive\Imágenes\ppoo.jpeg" alt="Diseño y creación de páginas web">
+                </div>
+                <div class="materia-info">
+                    <h3>Desarrollo Web</h3>
+                    <span class="badge-horas">7 Horas Semanales</span>
+                    <p>Centrada en los estándares del ecosistema de Internet. Los alumnos aprenden el manejo y estructuración de tecnologías web, diseño de interfaces de usuario interactivas (UI), usabilidad (UX) y la correcta integración de lenguajes para la web moderna.</p>
+                    <p><strong>Competencias y Aplicación Laboral:</strong> Diseño e implementación de portales web corporativos y plataformas web auto-gestionables. Abre las puertas al mercado del trabajo remoto (freelance) y agencias de marketing digital.</p>
+                </div>
+            </div>
+
+            <div class="materia-tarjeta">
+                <div class="materia-imagen">
+                    <img src="C:\Users\nancy\OneDrive\Imágenes\ooo.jpeg" alt="Redes, servidores y conectividad">
+                </div>
+                <div class="materia-info">
+                    <h3>Redes Informáticas</h3>
+                    <span class="badge-horas">7 Horas Semanales</span>
+                    <p>Estudio detallado de la infraestructura de comunicación de datos. Abarca desde las tipologías y el ponchado de cables físicos, hasta la configuración lógica de routers, switches, subredes e implementación segura de arquitecturas cliente-servidor.</p>
+                    <p><strong>Competencias y Aplicación Laboral:</strong> Diagnóstico y optimización de flujos de datos en organizaciones. Los egresados pueden operar eficientemente como administradores de redes locales y técnicos de soporte en conectividad.</p>
+                </div>
+            </div>
+
+            <div class="materia-tarjeta reversa">
+                <div class="materia-imagen">
+                    <img src="c:\Users\nancy\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\1AE824C12447F3D7BDF95C26EC78570514B7D464\transfers\2026-25\WhatsApp Image 2026-06-17 at 11.08.08 AM.jpeg" alt="Diseño gráfico y multimedia">
+                </div>
+                <div class="materia-info">
+                    <h3>Producciones Digitales</h3>
+                    <span class="badge-horas">6 Horas Semanales</span>
+                    <p>Una ventana hacia la creatividad técnica. En este módulo se instruye sobre la edición audiovisual, modelado básico, diseño de piezas gráficas y optimización de contenido multimedia interactivo bajo estándares de calidad comercial.</p>
+                    <p><strong>Competencias y Aplicación Laboral:</strong> Dominio de software de edición y conceptualización audiovisual. Esencial para trabajar en departamentos de comunicación institucional, creación de contenidos y edición multimedia.</p>
+                </div>
+            </div>
+
+            <div class="materia-tarjeta">
+                <div class="materia-imagen">
+                    <img src="c:\Users\nancy\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\1AE824C12447F3D7BDF95C26EC78570514B7D464\transfers\2026-25\WhatsApp Image 2026-06-17 at 11.13.30 AM.jpeg" alt="Reparación y ensamblaje de computadoras">
+                </div>
+                <div class="materia-info">
+                    <h3>Mantenimiento y Reparación</h3>
+                    <span class="badge-horas">6 Horas Semanales</span>
+                    <p>Aborda el componente físico (Hardware). Los estudiantes realizan ensamblajes completos de ordenadores, diagnostican fallos mecánicos y lógicos, ejecutan limpiezas preventivas e instalan y configuran sistemas operativos desde cero.</p>
+                    <p><strong>Competencias y Aplicación Laboral:</strong> Soporte de hardware de precisión. Permite trabajar de manera independiente en talleres de reparación tecnológica o liderar mesas de ayuda de TI (Helpdesk).</p>
+                </div>
+            </div>
+
+            <div class="materia-tarjeta reversa">
+                <div class="materia-imagen">
+                    <img src="c:\Users\nancy\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\1AE824C12447F3D7BDF95C26EC78570514B7D464\transfers\2026-25\WhatsApp Image 2026-06-17 at 11.23.09 AM.jpeg" alt="Administración de proyectos tecnológicos">
+                </div>
+                <div class="materia-info">
+                    <h3>Gestión Empresarial Orientada a la Informática</h3>
+                    <span class="badge-horas">3 Horas Semanales</span>
+                    <p>Une la ingeniería informática con el sector de negocios. Enseña a evaluar costos de desarrollo de software, planificar proyectos mediante metodologías ágiles, redactar contratos tecnológicos y comprender la legislación vigente de propiedad intelectual.</p>
+                    <p><strong>Competencias y Aplicación Laboral:</strong> Liderazgo técnico y estructuración de proyectos de software. Clave para el rol de Gestor de Proyectos de TI o para fundar microempresas de base tecnológica (Startups).</p>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top: 60px;">
+    <h2 class="titulo-seccion">Docentes De La Carrera De Informatica</h2>
+
+    <div class="materia-tarjeta" style="display: block; width: 100%;">
+        <div class="materia-info" style="width: 100%; padding: 30px; text-align: left;">
+            <span class="badge-horas" style="margin-bottom: 10px;">Área Técnica</span>
+            <h3 style="font-size: 24px; margin-bottom: 10px; color: var(--blanco-puro);">Prof. Daniel Moncada</h3>
+            <p style="margin-bottom: 15px;">Especialista técnico enfocado en la arquitectura física, el despliegue de redes de comunicación eficientes y el desarrollo de plataformas interactivas para la web moderna.</p>
+            <p><strong>Clases que imparte:</strong></p>
+            <ul style="padding-left: 20px; margin-top: 5px;">
+                <li>Mantenimiento y Reparación</li>
+                <li>Redes Informáticas</li>
+                <li>Desarrollo Web</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="materia-tarjeta" style="display: block; width: 100%;">
+        <div class="materia-info" style="width: 100%; padding: 30px; text-align: left;">
+            <span class="badge-horas" style="margin-bottom: 10px;">Área Técnica</span>
+            <h3 style="font-size: 24px; margin-bottom: 10px; color: var(--blanco-puro);">Prof. Delia Fuentes</h3>
+            <p style="margin-bottom: 15px;">Profesional dedicada a potenciar la lógica algorítmica y el desarrollo de software structured, coordinando habilidades de soporte físico en sistemas de computación.</p>
+            <p><strong>Clases que imparte:</strong></p>
+            <ul style="padding-left: 20px; margin-top: 5px;">
+                <li>Programación II</li>
+                <li>Mantenimiento y Reparación</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="materia-tarjeta" style="display: block; width: 100%;">
+        <div class="materia-info" style="width: 100%; padding: 30px; text-align: left;">
+            <span class="badge-horas" style="margin-bottom: 10px;">Área Técnica</span>
+            <h3 style="font-size: 24px; margin-bottom: 10px; color: var(--blanco-puro);">Prof. Yolin Obed</h3>
+            <p style="margin-bottom: 15px;">Orientado al diseño multimedia creativo, la producción audiovisual avanzada y la resolución de problemas técnicos lógicos e integrales de hardware.</p>
+            <p><strong>Clases que imparte:</strong></p>
+            <ul style="padding-left: 20px; margin-top: 5px;">
+                <li>Mantenimiento y Reparación</li>
+                <li>Programación II</li>
+                <li>Producciones Digitales</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="materia-tarjeta" style="display: block; width: 100%;">
+        <div class="materia-info" style="width: 100%; padding: 30px; text-align: left;">
+            <span class="badge-horas" style="margin-bottom: 10px;">Área Técnica</span>
+            <h3 style="font-size: 24px; margin-bottom: 10px; color: var(--blanco-puro);">Prof. Maria Chacon</h3>
+            <p style="margin-bottom: 15px;">Encargada de dotar a los estudiantes de herramientas de administración corporativa, metodologías ágiles y gestión de proyectos tecnológicos aplicados al mercado actual.</p>
+            <p><strong>Clases que imparte:</strong></p>
+            <ul style="padding-left: 20px; margin-top: 5px;">
+                <li>Gestión Empresarial Orientada a la Informática</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+</div>
+</div>
+</body>
+</html>
