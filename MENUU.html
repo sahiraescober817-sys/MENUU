@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituto - Inicio y Quiénes Somos</title>
+    <style>
+        /* ==========================================================================
+           1. RESETEO Y VARIABLES DE DISEÑO (TONOS ROJO VINO Y NEGRO)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --negro-profundo: #0a0508;
+            --carbon-oscuro: #160f12;
+            --rojo-vino: #721c24;
+            --rojo-brillante: #a71d2a;
+            --vino-sutil: #f5c6cb;
+            --blanco-puro: #ffffff;
+            --gris-platino: #f8f9fa;
+            --gris-texto: #b8b9c5;
+            --card-bg: rgba(26, 18, 21, 0.9);
+            --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            background-color: var(--negro-profundo);
+            color: var(--gris-platino);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .overlay {
+            min-height: 100vh;
+            background: linear-gradient(180deg, rgba(10, 5, 8, 0.97) 0%, rgba(22, 15, 18, 0.93) 100%);
+            padding-bottom: 100px;
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* ==========================================================================
+           2. BARRA DE NAVEGACIÓN STICKY
+           ========================================================================== */
+        nav {
+            background: var(--negro-profundo);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid var(--rojo-vino);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu > li {
+            position: relative;
+        }
+
+        .menu li a {
+            color: var(--blanco-puro);
+            text-decoration: none;
+            padding: 22px 28px;
+            display: block;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+        }
+
+        .menu > li > a:hover {
+            color: var(--vino-sutil);
+            background: rgba(167, 29, 42, 0.08);
+        }
+
+        .flecha {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: 6px;
+            vertical-align: middle;
+            border-top: 4px solid var(--blanco-puro);
+            border-right: 4px solid transparent;
+            border-left: 4px solid transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .menu li:hover .flecha {
+            border-top-color: var(--vino-sutil);
+            transform: rotate(-180deg);
+        }
+
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--carbon-oscuro);
+            list-style: none;
+            min-width: 220px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            border-left: 3px solid var(--rojo-brillante);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: var(--transition-smooth);
+        }
+
+        .submenu li a {
+            padding: 14px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .submenu li a:hover {
+            background: rgba(167, 29, 42, 0.15);
+            color: var(--vino-sutil);
+            padding-left: 25px;
+        }
+
+        .menu li:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           3. ENCABEZADO HERO / SECCIÓN BIENVENIDA
+           ========================================================================== */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-top: 30px;
+        }
+
+        .hero h1 {
+            font-size: 46px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
+            color: var(--rojo-brillante);
+            text-shadow: 0 0 20px rgba(167, 29, 42, 0.4);
+        }
+
+        .hero h2 {
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--gris-texto);
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           4. ESTRUCTURA PRINCIPAL (TEXTO IZQUIERDA Y LOGO DERECHA)
+           ========================================================================== */
+        .bloque-inicio {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .seccion-texto {
+            flex: 1.3;
+        }
+
+        /* Tarjetas de Misión y Visión */
+        .card-info {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 35px 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: var(--transition-smooth);
+        }
+
+        .card-info:hover {
+            transform: translateY(-5px);
+            border-color: rgba(167, 29, 42, 0.3);
+        }
+
+        .card-info h2 {
+            font-size: 26px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Indicador lateral rojo estilo los códigos anteriores */
+        .card-info h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 24px;
+            background: var(--rojo-brillante);
+            margin-right: 12px;
+            border-radius: 2px;
+        }
+
+        .card-info p {
+            font-size: 16.5px;
+            line-height: 1.8;
+            color: var(--gris-texto);
+            text-align: justify;
+        }
+
+        /* Contenedor del Logo con Animación Estilizada */
+        .seccion-logo {
+            flex: 0.7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-marcado {
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid var(--rojo-vino);
+            box-shadow: 0 0 40px rgba(114, 28, 36, 0.6);
+            animation: entradaLogo 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            background: var(--carbon-oscuro);
+        }
+
+        .logo-marcado img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes entradaLogo {
+            from {
+                transform: scale(0.8) rotate(-5deg);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* ==========================================================================
+           5. RESPONSIVE DESIGN
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .bloque-inicio {
+                flex-direction: column-reverse;
+                gap: 40px;
+            }
+            .seccion-logo {
+                width: 100%;
+            }
+            .logo-marcado {
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+            }
+            .menu li a {
+                padding: 12px 20px;
+            }
+            .submenu {
+                position: relative;
+                top: 0;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                width: 100%;
+                text-align: center;
+                border-left: none;
+                border-top: 1px solid rgba(167, 29, 42, 0.3);
+                background: rgba(0, 0, 0, 0.3);
+            }
+            .menu li:hover .submenu {
+                display: block;
+            }
+            .hero h1 {
+                font-size: 34px;
+            }
+            .hero h2 {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card-info {
+                padding: 25px 20px;
+            }
+            .logo-marcado {
+                width: 260px;
+                height: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay">
+
+    <nav>
+        <ul class="menu">
+            <li><a href="MENUU.html">Inicio</a></li>
+            <li><a href="Quienes somos.html">Quiénes Somos</a></li>
+            <li>
+                <a href="#">Carreras <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="Informatica.html">Informática</a></li>
+                    <li><a href="electricidad.html">Electricidad</a></li>
+                    <li><a href="humanidades.html">Ciencias y Humanidades</a></li>
+                    <li><a href="finanzas.html">Contaduría y Finanzas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Áreas Técnicas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="madera.html">Madera</a></li>
+                    <li><a href="Corte Confeccion.html">Costura Hogar</a></li>
+                    <li><a href="Electricidad Area.html">Electricidad</a></li>
+                    <li><a href="Estructuras Metalicas.html">Estructuras Metálicas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Jornadas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="matutina.html">Matutina</a></li>
+                    <li><a href="vespertina.html">Vespertina</a></li>
+                    <li><a href="nocturna.html">Nocturna</a></li>
+                    <li><a href="isemed.html">ISEMED</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="contenedor">
+        
+        <header class="hero">
+            <h1>Bienvenidos al <span>JTC</span></h1>
+            <h2>Formación integral con calidad, innovación y valores éticos</h2>
+        </header>
+
+        <div class="bloque-inicio">
+            
+            <div class="seccion-texto">
+                
+                <article class="card-info">
+                    <h2>Misión</h2>
+                    <p>
+                        Formar estudiantes con excelencia académica, valores éticos y competencias técnicas de alto nivel que les permitan integrarse de manera exitosa y proactiva a la sociedad, así como al competitivo mercado laboral actual.
+                    </p>
+                </article>
+
+                <article class="card-info">
+                    <h2>Visión</h2>
+                    <p>
+                        Ser una institución educativa líder a nivel nacional, ampliamente reconocida por su rigurosidad académica, constante innovación tecnológica y la formación integral de ciudadanos profesionales firmemente comprometidos con el desarrollo integral del país.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="seccion-logo">
+                <div class="logo-marcado">
+                    <img src="c:\Users\nancy\AppData\Local\Packages\5319275A.WhatsAppDesktop_cv1g1gvanyjgm\LocalState\sessions\1AE824C12447F3D7BDF95C26EC78570514B7D464\transfers\2026-25\WhatsApp Image 2026-06-17 at 11.02.20 AM.jpeg">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
