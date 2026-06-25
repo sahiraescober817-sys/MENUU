@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituto - Jornada Vespertina</title>
+    <style>
+        /* ==========================================================================
+           1. RESETEO Y VARIABLES DE DISEÑO (PALETA NARANJA Y NEGRO)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --negro-profundo: #0c0907;
+            --carbon-oscuro: #1a1410;
+            --naranja-principal: #e66000;
+            --naranja-brillante: #ff7714;
+            --naranja-sutil: #ffe6d5;
+            --blanco-puro: #ffffff;
+            --gris-platino: #fcfbfa;
+            --gris-texto: #cbd3cc;
+            --card-bg: rgba(34, 26, 21, 0.9);
+            --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
+            --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            background-color: var(--negro-profundo);
+            color: var(--gris-platino);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .overlay {
+            min-height: 100vh;
+            background: linear-gradient(180deg, rgba(12, 9, 7, 0.98) 0%, rgba(26, 20, 16, 0.94) 100%);
+            padding-bottom: 80px;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* ==========================================================================
+           2. BARRA DE NAVEGACIÓN STICKY
+           ========================================================================== */
+        nav {
+            background: var(--negro-profundo);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid var(--naranja-principal);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu > li {
+            position: relative;
+        }
+
+        .menu li a {
+            color: var(--blanco-puro);
+            text-decoration: none;
+            padding: 22px 28px;
+            display: block;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+        }
+
+        .menu > li > a:hover {
+            color: var(--naranja-sutil);
+            background: rgba(230, 96, 0, 0.08);
+        }
+
+        .flecha {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: 6px;
+            vertical-align: middle;
+            border-top: 4px solid var(--blanco-puro);
+            border-right: 4px solid transparent;
+            border-left: 4px solid transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .menu li:hover .flecha {
+            border-top-color: var(--naranja-sutil);
+            transform: rotate(-180deg);
+        }
+
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--carbon-oscuro);
+            list-style: none;
+            min-width: 220px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            border-left: 3px solid var(--naranja-brillante);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: var(--transition-smooth);
+        }
+
+        .submenu li a {
+            padding: 14px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .submenu li a:hover {
+            background: rgba(230, 96, 0, 0.15);
+            color: var(--naranja-sutil);
+            padding-left: 25px;
+        }
+
+        .menu li:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           3. ENCABEZADO / HERO DE LA JORNADA
+           ========================================================================== */
+        .encabezado-hero {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-top: 25px;
+        }
+
+        .encabezado-hero h1 {
+            font-size: 46px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .encabezado-hero h1 span {
+            color: var(--naranja-brillante);
+            text-shadow: 0 0 20px rgba(255, 119, 20, 0.35);
+        }
+
+        .encabezado-hero p {
+            font-size: 18px;
+            color: var(--gris-texto);
+            max-width: 800px;
+            margin: auto;
+        }
+
+        /* ==========================================================================
+           4. SECCIONES DE CONTENIDO TRABAJADAS CON TARJETAS PREMIUM
+           ========================================================================== */
+        .grid-contenido {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tarjeta-detalle {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 45px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.01);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tarjeta-detalle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--naranja-principal);
+        }
+
+        .tarjeta-detalle:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 119, 20, 0.25);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+        }
+
+        .titulo-bloque {
+            font-size: 24px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .titulo-bloque::after {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--naranja-brillante);
+            margin-left: 12px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--naranja-brillante);
+        }
+
+        .texto-detalle {
+            font-size: 17px;
+            line-height: 1.9;
+            color: var(--gris-texto);
+            text-align: justify;
+        }
+
+        /* Caja de cita textual estilizada */
+        .caja-destacada {
+            background: linear-gradient(135deg, rgba(230, 96, 0, 0.1) 0%, rgba(26, 20, 16, 0.9) 100%);
+            border: 1px dashed rgba(255, 119, 20, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 25px;
+        }
+
+        /* Bloques de etiquetas para los valores */
+        .caja-destacada-valores {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .valor-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 15px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--blanco-puro);
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+        }
+
+        .tarjeta-detalle:hover .valor-item {
+            border-color: rgba(230, 96, 0, 0.2);
+            color: var(--naranja-brillante);
+        }
+
+        /* ==========================================================================
+           5. RESPONSIVE DESIGN (DISEÑO MÓVIL)
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+            }
+            .menu li a {
+                padding: 12px 20px;
+            }
+            .submenu {
+                position: relative;
+                top: 0;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                width: 100%;
+                text-align: center;
+                border-left: none;
+                border-top: 1px solid rgba(255, 119, 20, 0.3);
+                background: rgba(0, 0, 0, 0.3);
+            }
+            .menu li:hover .submenu {
+                display: block;
+            }
+            .encabezado-hero h1 {
+                font-size: 34px;
+            }
+            .tarjeta-detalle {
+                padding: 30px 20px;
+            }
+            .caja-destacada-valores {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay">
+
+    <nav>
+        <ul class="menu">
+            <li><a href="MENUU.html">Inicio</a></li>
+            <li><a href="Quienes Somos.html">Quiénes Somos</a></li>
+            <li>
+                <a href="#">Carreras <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="Informatica.html">Informática</a></li>
+                    <li><a href="electricidad.html">Electricidad</a></li>
+                    <li><a href="humanidades.html">Humanidades</a></li>
+                    <li><a href="finanzas.html">Contaduría y Finanzas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="areas_tecnicas.html">Áreas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="madera.html">Madera</a></li>
+                    <li><a href="Corte Confeccion.html">Corte y Confección</a></li>
+                    <li><a href="Electricidad Area.html">Electricidad</a></li>
+                    <li><a href="Estructuras Metalicas.html">Estructuras Metálicas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Jornadas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="matutina.html">Matutina</a></li>
+                    <li><a href="vespertina.html">Vespertina</a></li>
+                    <li><a href="nocturna.html">Nocturna</a></li>
+                    <li><a href="isemed.html">ISEMED</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="contenedor">
+
+        <header class="encabezado-hero">
+            <h1>Jornada <span>Vespertina</span></h1>
+            <p>Flexibilidad, adaptabilidad y compromiso con la educación integral en el horario de la tarde.</p>
+        </header>
+
+        <div class="grid-contenido">
+            
+            <section class="tarjeta-detalle">
+                <h2 class="titulo-bloque">Alternativa y Flexibilidad</h2>
+                <p class="texto-detalle">
+                    La Jornada Vespertina del Instituto José Trinidad Cabañas está meticulosamente diseñada para atender de forma óptima a los estudiantes que asisten a sus asignaturas académicas en el horario de la tarde. Esta modalidad ofrece una propuesta pedagógica altamente flexible que se adapta con facilidad a las diversas necesidades personales, familiares o compromisos laborales de la población estudiantil.
+                </p>
+                <div class="caja-destacada">
+                    <p class="texto-detalle" style="font-style: italic; color: var(--blanco-puro); text-align: center;">
+                        Un espacio académico ideal para quienes administran de forma activa sus responsabilidades diarias sin descuidar su formación técnica y humanística.
+                    </p>
+                </div>
+            </section>
+
+            <section class="tarjeta-detalle">
+                <h2 class="titulo-bloque">Desarrollo de Competencias</h2>
+                <p class="texto-detalle">
+                    Durante el desarrollo de la Jornada Vespertina, se promueve permanentemente la participación activa dentro del aula, el desarrollo de proyectos grupales y un firme sentido de autoexigencia. El modelo pedagógico se enfoca en afianzar valores esenciales que preparen a los jóvenes para enfrentar las demandas de la sociedad con solvencia moral y profesional.
+                </p>
+                
+                <div class="caja-destacada-valores">
+                    <div class="valor-item">Disciplina Constante</div>
+                    <div class="valor-item">Respeto Mutuo</div>
+                    <div class="valor-item">Compromiso Educativo</div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
