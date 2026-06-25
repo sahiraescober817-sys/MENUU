@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTP en Contaduría y Finanzas - Horarios y Materias</title>
+    <style>
+        /* ==========================================================================
+           1. RESETEO Y VARIABLES DE DISEÑO (TONOS MORADO OSCURO)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --morado-profundo: #0b071e;
+            --carbon-morado: #140f2b;
+            --morado-claro: #8e7cc3;
+            --morado-brillante: #674ea7;
+            --morado-sutil: #d9d2e9;
+            --blanco-puro: #ffffff;
+            --gris-platino: #f1f5f9;
+            --gris-texto: #a4a6b5;
+            --card-bg: rgba(28, 22, 53, 0.9);
+            --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            background-color: var(--morado-profundo);
+            color: var(--gris-platino);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .overlay {
+            min-height: 100vh;
+            background: linear-gradient(180deg, rgba(11, 7, 30, 0.96) 0%, rgba(20, 15, 43, 0.92) 100%);
+            padding-bottom: 100px;
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* ==========================================================================
+           2. BARRA DE NAVEGACIÓN STICKY
+           ========================================================================== */
+        nav {
+            background: var(--morado-profundo);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid var(--morado-claro);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu > li {
+            position: relative;
+        }
+
+        .menu li a {
+            color: var(--blanco-puro);
+            text-decoration: none;
+            padding: 22px 28px;
+            display: block;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+        }
+
+        .menu > li > a:hover {
+            color: var(--morado-claro);
+            background: rgba(142, 124, 195, 0.05);
+        }
+
+        .flecha {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: 6px;
+            vertical-align: middle;
+            border-top: 4px solid var(--blanco-puro);
+            border-right: 4px solid transparent;
+            border-left: 4px solid transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .menu li:hover .flecha {
+            border-top-color: var(--morado-claro);
+            transform: rotate(-180deg);
+        }
+
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--carbon-morado);
+            list-style: none;
+            min-width: 220px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            border-left: 3px solid var(--morado-claro);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: var(--transition-smooth);
+        }
+
+        .submenu li a {
+            padding: 14px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .submenu li a:hover {
+            background: rgba(142, 124, 195, 0.1);
+            color: var(--morado-claro);
+            padding-left: 25px;
+        }
+
+        .menu li:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           3. ENCABEZADO HERO
+           ========================================================================== */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-top: 30px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
+            color: var(--morado-claro);
+            text-shadow: 0 0 20px rgba(142, 124, 195, 0.4);
+        }
+
+        .hero h2 {
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--gris-texto);
+            margin-bottom: 35px;
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================================================
+           4. SECCIÓN ESPECIAL: TRABAJO EDUCATIVO (CON DOS IMÁGENES)
+           ========================================================================== */
+        .seccion-especial {
+            background: linear-gradient(135deg, rgba(142, 124, 195, 0.1) 0%, rgba(28, 22, 53, 0.95) 100%);
+            border: 2px solid var(--morado-claro);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 60px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .especial-contenido {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .especial-txt {
+            flex: 1;
+        }
+
+        .especial-txt h3 {
+            font-size: 28px;
+            color: var(--blanco-puro);
+            margin-bottom: 10px;
+        }
+
+        .especial-txt h3 span {
+            color: var(--morado-claro);
+        }
+
+        .badge-horas {
+            display: inline-block;
+            background: var(--blanco-puro);
+            color: var(--morado-profundo);
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .especial-desc {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--gris-platino);
+            text-align: justify;
+        }
+
+        .especial-galeria {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .contenedor-img-especial {
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            height: 220px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .img-especial {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .contenedor-img-especial:hover .img-especial {
+            transform: scale(1.05);
+        }
+
+        /* ==========================================================================
+           5. DISTRIBUCIÓN DE HORARIOS (GRID DE ENTRADA)
+           ========================================================================== */
+        .seccion-plan {
+            margin-bottom: 60px;
+        }
+
+        .titulo-seccion {
+            text-align: center;
+            font-size: 32px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 45px;
+            font-weight: 700;
+        }
+
+        .titulo-seccion::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--morado-brillante);
+            margin: 12px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .grid-plan {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .col-plan {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: var(--transition-smooth);
+        }
+
+        .col-plan:hover {
+            transform: translateY(-5px);
+            border-color: rgba(142, 124, 195, 0.3);
+        }
+
+        .col-plan h3 {
+            font-size: 24px;
+            color: var(--morado-claro);
+            text-align: center;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 15px;
+        }
+
+        .lista-materias {
+            list-style: none;
+        }
+
+        .lista-materias li {
+            padding: 12px 0;
+            font-size: 15px;
+            color: var(--gris-platino);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .lista-materias li::before {
+            content: "📊";
+            margin-right: 12px;
+            font-size: 14px;
+        }
+
+        .lista-materias li strong {
+            color: var(--morado-sutil);
+            margin-right: 6px;
+        }
+
+        /* ==========================================================================
+           6. TARJETAS DETALLADAS DE ASIGNATURAS (11VO Y 12VO)
+           ========================================================================== */
+        .materia-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: var(--transition-smooth);
+            padding: 35px 40px;
+        }
+
+        .materia-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(142, 124, 195, 0.3);
+        }
+
+        .materia-card h4 {
+            font-size: 26px;
+            color: var(--blanco-puro);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .horas-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--morado-claro), var(--morado-brillante));
+            color: var(--blanco-puro);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 50px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .materia-desc {
+            font-size: 15.5px;
+            line-height: 1.7;
+            color: var(--gris-texto);
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .meta-line {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--gris-platino);
+        }
+
+        .meta-line strong {
+            color: var(--morado-sutil);
+        }
+
+        /* Separador de Bloques */
+        .bloque-grados {
+            margin-top: 60px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .grid-plan { grid-template-columns: 1fr; }
+            .especial-contenido { flex-direction: column; gap: 30px; }
+            .especial-galeria { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+            }
+            .menu li a {
+                padding: 12px 20px;
+            }
+            .submenu {
+                position: relative;
+                top: 0;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                display: none;
+                width: 100%;
+                text-align: center;
+                border-left: none;
+                border-top: 1px solid rgba(142, 124, 195, 0.3);
+                background: rgba(0, 0, 0, 0.2);
+            }
+            .menu li:hover .submenu {
+                display: block;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .hero h2 {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .materia-card {
+                padding: 25px 20px;
+            }
+            .especial-galeria { grid-template-columns: 1fr; }
+            .contenedor-img-especial { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay">
+
+    <nav>
+        <ul class="menu">
+            <li><a href="MENUU.html">Inicio</a></li>
+            <li><a href="Quienes somos.html">Quiénes Somos</a></li>
+            <li>
+                <a href="#">Carreras <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="Informatica.html">Informática</a></li>
+                    <li><a href="electricidad.html">Electricidad</a></li>
+                    <li><a href="humanidades.html">Ciencias y Humanidades</a></li>
+                    <li><a href="finanzas.html">Contaduría y Finanzas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Áreas Técnicas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="madera.html">Madera</a></li>
+                    <li><a href="Corte Confeccion.html">Costura Hogar</a></li>
+                    <li><a href="Electricidad Area.html">Electricidad</a></li>
+                    <li><a href="Estructuras Metalicas.html">Estructuras Metálicas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Jornadas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="matutina.html">Matutina</a></li>
+                    <li><a href="vespertina.html">Vespertina</a></li>
+                    <li><a href="nocturna.html">Nocturna</a></li>
+                    <li><a href="isemed.html">ISEMED</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="contenedor">
+        
+        <header class="hero">
+            <h1>BTP en <span>Contaduría y Finanzas</span></h1>
+            <h2>Cronograma y Distribución de Bloques Horarios Profesionales</h2>
+        </header>
+
+        <section class="seccion-especial">
+            <div class="especial-contenido">
+                <div class="especial-txt">
+                    <div class="badge-horas">4 HORAS SEMANALES</div>
+                    <h3>Trabajo Educativo <span>Social (TES)</span></h3>
+                    <p class="especial-desc">
+                        Espacio de vinculación comunitaria obligatorio enfocado en proyectos de impacto contable, financiero, ambiental y social. Los estudiantes aplican sus competencias organizativas y de gestión para generar un cambio positivo en el entorno institucional y colectivo, fomentando la ética y responsabilidad ciudadana.
+                    </p>
+                </div>
+                <div class="especial-galeria">
+                    <div class="contenedor-img-especial">
+                        <img src="C:\Users\nancy\OneDrive\Imágenes\finanzas2.jpeg" alt="Actividad Financiera 1" class="img-especial">
+                    </div>
+                    <div class="contenedor-img-especial">
+                        <img src="C:\Users\nancy\OneDrive\Imágenes\finanzas1.jpeg" alt="Actividad Financiera 2" class="img-especial">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="seccion-plan">
+            <h2 class="titulo-seccion">Distribución de Horarios</h2>
+            
+            <div class="grid-plan">
+                <div class="col-plan">
+                    <h3>Undécimo Año (11vo) - Regular</h3>
+                    <ul class="lista-materias">
+                        <li><strong>Contabilidad General:</strong> Bloques Semanales</li>
+                        <li><strong>Administración General:</strong> Clases de Especialidad</li>
+                        <li><strong>Matemáticas / Finanzas:</strong> Tronco de Razonamiento</li>
+                        <li><strong>Español / Filosofía:</strong> Bloque Humanístico</li>
+                        <li><strong>Inglés Técnico / Gestión:</strong> Herramientas Prácticas</li>
+                    </ul>
+                </div>
+                
+                <div class="col-plan">
+                    <h3>Duodécimo Año (12vo) - Fin de Semana</h3>
+                    <ul class="lista-materias">
+                        <li><strong>Contabilidad Básica:</strong> Sáb. (4 Horas) / Dom. (2 Horas)</li>
+                        <li><strong>Contabilidad de Costos:</strong> Sáb. (2 Horas) / Dom. (2 Horas)</li>
+                        <li><strong>Contabilidad Bancaria:</strong> Sáb. (2 Horas) / Dom. (2 Horas)</li>
+                        <li><strong>Contabilidad Financiera:</strong> Eje de Cierre</li>
+                        <li><strong>Receso General:</strong> 20 Minutos por Jornada</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+       <section style="margin-top: 60px;">
+    <h2 class="titulo-seccion">Personal Docente</h2>
+
+    <div class="materia-card" style="display: block; width: 100%; background: linear-gradient(135deg, var(--azul-marino), var(--azul-profundo));">
+        <div class="materia-celda-txt" style="display: block; width: 100%; padding: 30px; text-align: justify;">
+            <span class="horas-tag" style="margin-bottom: 10px;">Docente Técnico</span>
+            <h4 style="font-size: 22px; margin: 0; color: var(--blanco-puro);">Prof. Fiama Euceda</h4>
+            <p></h1>Docente especialozada en el area de Cieniencas y Humanidades, dando clases como, Economia, docente decidida a enseñar y guiar a los estudiantes.</p><h1></p>
+        </div>
+    </div>
+
+    <div class="materia-card" style="display: block; width: 100%; background: linear-gradient(135deg, var(--azul-marino), var(--azul-profundo));">
+        <div class="materia-celda-txt" style="display: block; width: 100%; padding: 30px; text-align: justify;">
+            <span class="horas-tag" style="margin-bottom: 10px;">Docente Técnico</span>
+            <h4 style="font-size: 22px; margin: 0; color: var(--blanco-puro);">Prof. Maria Chacon</h4> 
+            <p>Docente especializado en el area de Apreciacion Artistica, dedicada a la enseñanza y educacion de los estudieantes.</p>
+        </div>
+    </div>
+
+     <div class="materia-card" style="display: block; width: 100%; background: linear-gradient(135deg, var(--azul-marino), var(--azul-profundo));">
+        <div class="materia-celda-txt" style="display: block; width: 100%; padding: 30px; text-align: justify;">
+            <span class="horas-tag" style="margin-bottom: 10px;">Docente Especializado</span>
+            <h4 style="font-size: 22px; margin: 0; color: var(--blanco-puro);">Prof. Elvin Vasquez</h4>
+            <p>Docente especializado en el area de Fisica2, Quimica, Biologia, dedicada a la enseñanza y educacion de los estudieantes</p>
+        </div>
+        </div>
+
+         <div class="materia-card" style="display: block; width: 100%; background: linear-gradient(135deg, var(--azul-marino), var(--azul-profundo));">
+        <div class="materia-celda-txt" style="display: block; width: 100%; padding: 30px; text-align: justify;">
+            <span class="horas-tag" style="margin-bottom: 10px;">Docente Especializado</span>
+            <h4 style="font-size: 22px; margin: 0; color: var(--blanco-puro);">Prof. Jose Andres Soto</h4>
+            <p>Docente especializado en el area de Ingles, dedicado a la enseñanza y educacion de los estudieantes</p>
+        </div>
+        </div>
+        
+    <div class="materia-card" style="display: block; width: 100%; background: linear-gradient(135deg, var(--azul-marino), var(--azul-profundo));">
+        <div class="materia-celda-txt" style="display: block; width: 100%; padding: 30px; text-align: justify;">
+            <span class="horas-tag" style="margin-bottom: 10px;">Docente Especializado</span>
+            <h4 style="font-size: 22px; margin: 0; color: var(--blanco-puro);">Lic. Edith Ramos</h4>
+            <p>Docente especializada en el area de Filosofia, dedicado a la enseñanza y educacion de los estudieantes</p>
+        </div>
+</section>
+
+</div> 
+</div> 
+</body>
+</html>
+
