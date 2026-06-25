@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTP en Electricidad - Instituto Técnico</title>
+    <style>
+        /* ==========================================================================
+           1. RESETEO DE ESTILOS Y VARIABLES DE DISEÑO (TONOS AMARILLOS Y DORADOS)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --gris-oscuro: #0f1115;
+            --carbon-bg: #161920;
+            --amarillo-electrico: #ffdf00;
+            --amarillo-dorado: #e6b800;
+            --oro-sutil: #ffea70;
+            --blanco-puro: #ffffff;
+            --gris-platino: #f1f5f9;
+            --gris-texto: #94a3b8;
+            --card-bg: rgba(30, 35, 45, 0.9);
+            --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            background: url('fondo-institucional.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-color: var(--gris-oscuro);
+            color: var(--gris-platino);
+            overflow-x: hidden;
+        }
+
+        /* Capa superpuesta oscura para máximo contraste */
+        .overlay {
+            min-height: 100vh;
+            background: linear-gradient(180deg, rgba(15, 17, 21, 0.96) 0%, rgba(22, 25, 32, 0.92) 100%);
+            padding-bottom: 100px;
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* ==========================================================================
+           2. BARRA DE NAVEGACIÓN STICKY & DROPDOWN PREMIUM
+           ========================================================================== */
+        nav {
+            background: var(--gris-oscuro);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid var(--amarillo-electrico);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .menu > li {
+            position: relative;
+        }
+
+        .menu li a {
+            color: var(--blanco-puro);
+            text-decoration: none;
+            padding: 22px 28px;
+            display: block;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+        }
+
+        .menu > li > a:hover {
+            background: var(--amarillo-electrico);
+            color: var(--gris-oscuro);
+        }
+
+        .flecha::after {
+            content: ' ▼';
+            font-size: 10px;
+            color: var(--amarillo-electrico);
+            vertical-align: middle;
+        }
+        
+        .menu > li > a:hover .flecha::after {
+            color: var(--gris-oscuro);
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--carbon-bg);
+            min-width: 250px;
+            list-style: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            border-bottom: 3px solid var(--amarillo-dorado);
+        }
+
+        .submenu li a {
+            padding: 15px 20px;
+            font-weight: 500;
+            font-size: 14px;
+            border-bottom: 1px solid #222733;
+        }
+
+        .submenu li a:hover {
+            background: #222733;
+            color: var(--amarillo-electrico);
+            padding-left: 28px;
+        }
+
+        .menu li:hover .submenu {
+            display: block;
+        }
+
+        /* ==========================================================================
+           3. ENCABEZADO E INTRODUCCIÓN CORTA PROFESIONAL
+           ========================================================================== */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-top: 30px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
+            color: var(--amarillo-electrico);
+            text-shadow: 0 0 20px rgba(255, 223, 0, 0.4);
+        }
+
+        .hero h2 {
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--gris-texto);
+            margin-bottom: 35px;
+            letter-spacing: 1px;
+        }
+
+        .intro-container {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border-left: 5px solid var(--amarillo-electrico);
+            box-shadow: var(--card-shadow);
+            text-align: justify;
+            line-height: 1.8;
+            font-size: 16.5px;
+        }
+
+        .intro-container p {
+            margin-bottom: 15px;
+            color: var(--gris-platino);
+        }
+
+        .intro-container p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ==========================================================================
+           4. SECCIÓN PLAN DE ESTUDIOS ESPECIALIZADO (TARJETAS)
+           ========================================================================== */
+        .seccion-plan {
+            margin-bottom: 80px;
+        }
+
+        .titulo-seccion {
+            text-align: center;
+            font-size: 32px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 45px;
+            font-weight: 700;
+            margin-top: 40px;
+        }
+
+        .titulo-seccion::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--amarillo-dorado);
+            margin: 12px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .grid-plan {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 30px 0;
+        }
+
+        .col-plan {
+            display: table-cell;
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            vertical-align: top;
+            transition: var(--transition-smooth);
+        }
+
+        .col-plan:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 223, 0, 0.3);
+        }
+
+        .col-plan h3 {
+            font-size: 24px;
+            color: var(--amarillo-electrico);
+            text-align: center;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 15px;
+        }
+
+        .lista-materias {
+            list-style: none;
+        }
+
+        .lista-materias li {
+            padding: 11px 0;
+            font-size: 15px;
+            color: var(--gris-platino);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .lista-materias li::before {
+            content: "⚡";
+            margin-right: 12px;
+            color: var(--amarillo-electrico);
+            font-size: 13px;
+        }
+
+        .lista-materias li:last-child {
+            border-bottom: none;
+        }
+
+        /* ==========================================================================
+           5. MATERIAS ESPECIALIZADAS DE 11VO Y 12VO (DISEÑO ZIG-ZAG PERFECTO)
+           ========================================================================== */
+        .materia-card {
+            display: table;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 24px;
+            margin-bottom: 40px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: var(--transition-smooth);
+        }
+
+        .materia-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 223, 0, 0.3);
+        }
+
+        .materia-fila {
+            display: table-row;
+        }
+
+        .materia-celda-img, .materia-celda-txt {
+            display: table-cell;
+            vertical-align: middle;
+            width: 50%;
+        }
+
+        .materia-celda-img {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px 0 0 24px;
+        }
+
+        /* Inversión limpia de Zig-Zag mediante clases específicas */
+        .materia-card.zig-reverse .materia-celda-img {
+            border-radius: 0 24px 24px 0;
+        }
+        
+        .materia-card.zig-reverse .materia-celda-txt {
+            border-radius: 24px 0 0 24px;
+        }
+
+        .materia-img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition-smooth);
+        }
+
+        .materia-card:hover .materia-img {
+            transform: scale(1.03);
+        }
+
+        .materia-celda-txt {
+            padding: 45px;
+        }
+
+        .materia-celda-txt h4 {
+            font-size: 26px;
+            color: var(--blanco-puro);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .horas-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--amarillo-electrico), var(--amarillo-dorado));
+            color: var(--gris-oscuro);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 50px;
+            margin-bottom: 22px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .materia-desc {
+            font-size: 15.5px;
+            line-height: 1.7;
+            color: var(--gris-texto);
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .meta-line {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            color: var(--gris-platino);
+        }
+
+        .meta-line strong {
+            color: var(--oro-sutil);
+        }
+
+        /* ==========================================================================
+           6. RESPONSIVE DESIGN COMPLETO
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .grid-plan {
+                display: block;
+            }
+            .col-plan {
+                display: block;
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            .materia-fila {
+                display: block;
+            }
+            .materia-celda-img, .materia-celda-txt {
+                display: block;
+                width: 100%;
+            }
+            .materia-celda-img {
+                border-radius: 24px 24px 0 0 !important;
+            }
+            .materia-celda-txt {
+                border-radius: 0 0 24px 24px !important;
+                padding: 35px;
+            }
+            .materia-img {
+                height: 260px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+            }
+            .menu li a {
+                padding: 15px 20px;
+                border-bottom: 1px solid #1e232d;
+            }
+            .submenu {
+                position: relative;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+                background: var(--gris-oscuro);
+            }
+            .submenu li a {
+                padding-left: 35px;
+            }
+            .hero h1 {
+                font-size: 30px;
+            }
+            .hero h2 {
+                font-size: 18px;
+            }
+            .intro-container {
+                padding: 25px;
+                font-size: 15px;
+            }
+            .materia-celda-txt h4 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay">
+
+    <nav>
+        <ul class="menu">
+            <li><a href="MENUU.html">Inicio</a></li>
+            <li><a href="Quienes somos.html">Quiénes Somos</a></li>
+            <li>
+                <a href="#">Carreras <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="Informatica.html">Informática</a></li>
+                    <li><a href="electricidad.html">Electricidad</a></li>
+                    <li><a href="humanidades.html">Ciencias y Humanidades</a></li>
+                    <li><a href="finanzas.html">Contaduría y Finanzas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Áreas Técnicas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="madera.html">Madera</a></li>
+                    <li><a href="Corte Confeccion.html">Costura Hogar</a></li>
+                    <li><a href="Electricidad Area.html">Electricidad</a></li>
+                    <li><a href="Estructuras Metalicas.html">Estructuras Metálicas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Jornadas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="matutina.html">Matutina</a></li>
+                    <li><a href="vespertina.html">Vespertina</a></li>
+                    <li><a href="nocturna.html">Nocturna</a></li>
+                    <li><a href="isemed.html">ISEMED</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="contenedor">
+        
+        <header class="hero">
+            <h1>Bachillerato Técnico Profesional en <span>Electricidad</span></h1>
+            <h2>Formación Técnica y Tecnológica de Vanguardia</h2>
+            
+            <div class="intro-container">
+                <p>
+                    El Bachillerato Técnico Profesional en Electricidad es una carrera diseñada para formar técnicos con competencias de alto nivel en el diseño, montaje, diagnóstico, mantenimiento y automatización de sistemas eléctricos residenciales, comerciales e industriales. Los estudiantes adquieren un sólido dominio conceptual y práctico fundamentado en normas internacionales de seguridad energética, calidad y eficiencia.
+                </p>
+                <p>
+                    A través de esta formación, el egresado desarrolla destrezas clave para integrarse de inmediato en plantas de manufactura, subestaciones industriales, empresas de generación eléctrica y proyectos de energías renovables, o emprender su propia firma de consultoría técnica. Además, la carrera provee los fundamentos científicos idóneos para cursar con éxito ingenierías y estudios superiores, desempeñando un rol vital en el desarrollo socioeconómico y tecnológico de la industria moderna.
+                </p>
+            </div>
+        </header>
+
+        <section class="seccion-plan">
+            <h2 class="titulo-seccion">Plan de Estudios Especializado</h2>
+            
+            <div class="grid-plan">
+                <div class="col-plan">
+                    <h3>11vo Grado</h3>
+                    <ul class="lista-materias">
+                        <li>Electrotecnia</li>
+                        <li>Mediciones Eléctricas</li>
+                        <li>Electricidad e Instalaciones Eléctricas</li>
+                        <li>Reparación de Aparatos Electrodomésticos</li>
+                        <li>Dibujo Técnico</li>
+                        <li>Legislación Industrial</li>
+                        <li>Inglés Técnico</li>
+                        <li>Matemáticas</li>
+                        <li>Física</li>
+                        <li>Español</li>
+                        <li>Filosofía</li>
+                        <li>Educación y Apreciación Artística</li>
+                    </ul>
+                </div>
+                
+                <div class="col-plan">
+                    <h3>12vo Grado</h3>
+                    <ul class="lista-materias">
+                        <li>Control y Mando de Sistemas Eléctricos y Automatización</li>
+                        <li>Taller de Rebobinado de Máquinas Eléctricas</li>
+                        <li>Fundamentos de Electrónica y Telecomunicaciones</li>
+                        <li>Instalaciones Industriales y Redes de Distribución</li>
+                        <li>Máquinas Eléctricas</li>
+                        <li>Energías Renovables</li>
+                        <li>Gestión Industrial y Habilidades para la Vida</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <main>
+            <h2 class="titulo-seccion">Materias Especializadas de 11vo Grado</h2>
+
+            <section class="materia-card">
+                <div class="materia-fila">
+                    <div class="materia-celda-img">
+                        <img src="c:\Users\nancy\OneDrive\Imágenes\electricidad12.3.jpeg" alt="Electrotecnia">
+                    </div>
+                    <div class="materia-celda-txt">
+                        <h4>Electrotecnia</h4>
+                        <span class="horas-tag">6 Horas Semanales</span>
+                        <p class="materia-desc">Estudio teórico y experimental de las leyes fundamentales que rigen los circuitos eléctricos en corriente continua (CC) y corriente alterna (CA). Analiza fenómenos electromagnéticos, análisis de redes mediante teoremas complejos y el comportamiento de la potencia activa, reactiva y aparente.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Resolución matemática de circuitos complejos, cálculo de factores de potencia y comprensión profunda de los campos eléctricos y magnéticos.</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Asistente de diseño de redes eléctricas básicas, analista técnico de circuitos y soporte de cálculo en proyectos de ingeniería.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="materia-card zig-reverse">
+                <div class="materia-fila">
+                    <div class="materia-celda-txt">
+                        <h4>Mediciones Eléctricas</h4>
+                        <span class="horas-tag">4 Horas Semanales</span>
+                        <p class="materia-desc">Módulo esencial enfocado en el uso preciso de instrumentos de diagnóstico y medición industrial. Los estudiantes dominan el manejo de multímetros, amperímetros de gancho, osciloscopios, megómetros para aislamiento técnico y telurómetros para la medición de sistemas de puesta a tierra.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Calibración técnica, lectura correcta de magnitudes analógicas/digitales y detección temprana de anomalías eléctricas por aislamiento o resistencia.</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Técnico de control de calidad, inspector de seguridad en sistemas eléctricos y operario de mantenimiento predictivo.</p>
+                    </div>
+                    <div class="materia-celda-img">
+                        <img src="C:\Users\nancy\Downloads\medicion electrica.jpeg" class="materia-img" alt="Mediciones Eléctricas">
+                    </div>
+                </div>
+            </section>
+
+            <section class="materia-card">
+                <div class="materia-fila">
+                    <div class="materia-celda-img">
+                        <img src="C:\Users\nancy\Downloads\electricidad2.jpeg" class="materia-img" alt="Electricidad e Instalaciones Eléctricas">
+                    </div>
+                    <div class="materia-celda-txt">
+                        <h4>Electricidad e Instalaciones Eléctricas</h4>
+                        <span class="horas-tag">8 Horas Semanales</span>
+                        <p class="materia-desc">Taller enfocado en el diseño, canalización y cableado de sistemas eléctricos de interiores residenciales y comerciales. Abarca desde la interpretación de planos arquitectónicos hasta el montaje práctico de luminarias, interruptores, tableros de interruptores térmicos y acometidas principales.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Cableado estructurado residencial bajo normas constructivas vigentes, balanceo técnico de cargas y cálculo de calibres de conductores.</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Instalador eléctrico residencial certificado, técnico instalador comercial e inspector independiente de obras civiles.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="materia-card zig-reverse">
+                <div class="materia-fila">
+                    <div class="materia-celda-txt">
+                        <h4>Reparación de Aparatos Electrodomésticos</h4>
+                        <span class="horas-tag">4 Horas Semanales</span>
+                        <p class="materia-desc">Asignatura orientada al diagnóstico y reparación mecánica y eléctrica de equipos del hogar y la oficina. Incluye sistemas con motores universales (licuadoras, taladros), sistemas térmicos (planchas, hornos) y principios básicos de refrigeración y climatización elemental.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Detección de fallas mecánicas y continuidad eléctrica, sustitución de componentes dañados y pruebas de funcionamiento seguro.</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Técnico de servicio postventa, especialista en talleres de mantenimiento de electrodomésticos o microempresario autónomo.</p>
+                    </div>
+                    <div class="materia-celda-img">
+                        <img src="C:\Users\nancy\Downloads\electricidad3.jpeg" class="materia-img" alt="Reparación de Aparatos Electrodomésticos">
+                    </div>
+                </div>
+            </section>
+
+
+            <h2 class="titulo-seccion">Materias Especializadas de 12vo Grado</h2>
+
+            <section class="materia-card">
+                <div class="materia-fila">
+                    <div class="materia-celda-img">
+                        <img src="C:\Users\nancy\Downloads\electricidad 12.1.jpeg" class="materia-img" alt="Control y Mando de Sistemas Eléctricos y Automatización">
+                    </div>
+                    <div class="materia-celda-txt">
+                        <h4>Control y Mando de Sistemas Eléctricos y Automatización</h4>
+                        <span class="horas-tag">8 Horas Semanales</span>
+                        <p class="materia-desc">Estudio integral e implementación avanzada de sistemas de automatización industrial mediante lógica cableada y lógica programable. Abarca el análisis, programación y cableado de relevadores, temporizadores y Controladores Lógicos Programables (PLC), así como la integración de sensores industriales y actuadores.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Diseño de esquemas de automatización, diagnóstico de fallas lógicas, programación de PLCs y calibración de sistemas automáticos bajo estándares de la Industria 4.0.</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Técnico de mantenimiento en plantas manufactureras automatizadas, integrador de sistemas de control industrial y programador de líneas de producción continuas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="materia-card zig-reverse">
+                <div class="materia-fila">
+                    <div class="materia-celda-txt">
+                        <h4>Taller de Rebobinado de Máquinas Eléctricas</h4>
+                        <span class="horas-tag">8 Horas Semanales</span>
+                        <p class="materia-desc">Taller puramente práctico y analítico enfocado en los procesos de reconstrucción, cálculo y reparación de devanados para motores eléctricos monofásicos, trifásicos y transformadores. Incluye pruebas de aislamiento, toma de datos de placas, cálculo de calibres de alambre y aplicación de barnices dieléctricos.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Rebobinado preciso de estatores y rotores, cálculo matemático de espiras para modificación de velocidad o voltaje, y uso correcto de instrumental de aislamiento.</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Especialista en talleres de mantenimiento electromecánico pesados, jefe de reparación de motores en plantas industriales o emprendimiento autónomo de servicios electromecánicos.</p>
+                    </div>
+                    <div class="materia-celda-img">
+                        <img src="C:\Users\nancy\Downloads\electricidad12.2.jpeg" class="materia-img" alt="Taller de Rebobinado de Máquinas Eléctricas">
+                    </div>
+                </div>
+            </section>
+
+            <section class="materia-card">
+                <div class="materia-fila">
+                    <div class="materia-celda-img">
+                        <img src="C:\Users\nancy\Downloads\electricidad12.4.jpeg" class="materia-img" alt="Fundamentos de Electrónica y Telecomunicaciones">
+                    </div>
+                    <div class="materia-celda-txt">
+                        <h4>Fundamentos de Electrónica y Telecomunicaciones</h4>
+                        <span class="horas-tag">5 Horas Semanales</span>
+                        <p class="materia-desc">Introducción al comportamiento de componentes semiconductores básicos como diodos, transistores, tiristores y circuitos integrados. Asimismo, se estudian los sistemas de acondicionamiento de señal, fuentes de alimentación reguladas y los principios de transmisión de datos aplicados a redes de control técnico.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Interpretación de diagramas electrónicos analógicos y digitales, reparación de fuentes de poder, empalme de cableado estructurado y configuración de módulos de comunicación industrial.</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Técnico de soporte para equipos de instrumentación, instalador de sistemas de comunicación industrial y reparador de módulos electrónicos de potencia básicos.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="materia-card zig-reverse">
+                <div class="materia-fila">
+                    <div class="materia-celda-txt">
+                        <h4>Instalaciones Industriales y Redes de Distribución</h4>
+                        <span class="horas-tag">8 Horas Semanales</span>
+                        <p class="materia-desc">Módulo crítico que cubre las directrices técnicas para el diseño, dimensionamiento y montaje de alimentadores eléctricos trifásicos de gran escala, canalizaciones en tubería rígida pesada, tableros de distribución general y cálculo de líneas aéreas y subterráneas de baja y media tensión.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Cálculo de caídas de tensión industriales, balanceo de cargas en sistemas trifásicos, montaje de ductos industriales y cumplimiento estricto de normativas como el Código Eléctrico Nacional (NEC).</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Supervisor de obras de montaje eléctrico, técnico de redes de distribución para corporaciones energéticas y electricista industrial contratista en infraestructuras comerciales.</p>
+                    </div>
+                    <div class="materia-celda-img">
+                        <img src="C:\Users\nancy\Downloads\electricidad.5.jpeg" class="materia-img" alt="Instalaciones Industriales y Redes de Distribución">
+                    </div>
+                </div>
+            </section>
+
+            <section class="materia-card">
+                <div class="materia-fila">
+                    <div class="materia-celda-img">
+                        <img src="C:\Users\nancy\OneDrive\Imágenes\lk.jpeg" class="materia-img" alt="Máquinas Eléctricas">
+                    </div>
+                    <div class="materia-celda-txt">
+                        <h4>Máquinas Eléctricas</h4>
+                        <span class="horas-tag">5 Horas Semanales</span>
+                        <p class="materia-desc">Aborda los fundamentos teóricos y operativos del electromagnetismo aplicado a máquinas estáticas (transformadores de potencia) y máquinas rotativas (generadores, motores síncronos y asíncronos). Se analizan curvas de rendimiento, conexiones de transformadores y acoplamiento de alternadores.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Operación segura de subestaciones de transformación, análisis de eficiencia de motores de inducción, conexionado trifásico en estrella/delta y pruebas de cortocircuito.</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Operador técnico en subestaciones eléctricas, encargado de mantenimiento mecánico-eléctrico industrial y supervisor de sistemas de generación eléctrica de respaldo.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="materia-card zig-reverse">
+                <div class="materia-fila">
+                    <div class="materia-celda-txt">
+                        <h4>Energías Renovables</h4>
+                        <span class="horas-tag">2 Horas Semanales</span>
+                        <p class="materia-desc">Asignatura orientada a la transición energética global. Se enfoca en el cálculo, diseño, selección e instalación de sistemas solares fotovoltaicos (aislados e interconectados a la red) y los principios operativos de la generación eólica y biomasa a pequeña escala.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Dimensionamiento técnico de campos solares fotovoltaicos, cálculo de bancos de baterías, instalación de inversores solares y evaluación del recurso energético renovable local.</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Asesor e instalador de sistemas residenciales y comerciales de energía solar, técnico integrador eco-sustentable y supervisor de micro-redes de autogeneración limpia.</p>
+                    </div>
+                    <div class="materia-celda-img">
+                        <img src="C:\Users\nancy\Downloads\electricidad1.jpeg" class="materia-img" alt="Energías Renovables">
+                    </div>
+                </div>
+            </section>
+
+            <section class="materia-card">
+                <div class="materia-fila">
+                    <div class="materia-celda-img">
+                        <img src="C:\Users\nancy\Downloads\electricidad12.3.jpeg" class="materia-img" alt="Gestión Industrial y Habilidades para la Vida">
+                    </div>
+                    <div class="materia-celda-txt">
+                        <h4>Gestión Industrial y Habilidades para la Vida</h4>
+                        <span class="horas-tag">4 Horas Semanales</span>
+                        <p class="materia-desc">Combina el desarrollo de aptitudes directivas y operativas esenciales para el entorno industrial con habilidades interpersonales. Incluye la formulación de presupuestos y cotizaciones eléctricas, control de almacenes y herramientas, normativas de seguridad e higiene (OSHA), liderazgo, ética profesional y trabajo colaborativo.</p>
+                        <p class="meta-line"><strong>Competencias desarrolladas:</strong> Elaboración formal de ofertas técnicas de licitación, administración eficiente de recursos materiales en proyectos, técnicas operativas de manejo del estrés y comunicación asertiva en entornos laborales de alto riesgo.</p>
+                        <p class="meta-line"><strong>Aplicación laboral:</strong> Administrador de talleres eléctricos, supervisor intermedio de cuadrillas técnicas en campo, analista de costos para contratistas y emprendedor de su propia firma técnica.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+   <section style="margin-top: 60px;">
+    <h2 class="titulo-seccion">Personal Docente</h2>
+
+    <div class="materia-card" style="display: block; width: 100%; background: linear-gradient(135deg, var(--azul-marino), var(--azul-profundo));">
+        <div class="materia-celda-txt" style="display: block; width: 100%; padding: 30px; text-align: justify;">
+            <span class="horas-tag" style="margin-bottom: 10px;">Docente Técnico</span>
+            <h4 style="font-size: 22px; margin: 0; color: var(--blanco-puro);">Lic. Claudia Reyes</h4>
+            <p></h1>Docente especialozada en el area de Electricidad,docente decidida a enseñar y guiar a los estudiantes de la carrera de Electricidad.</p><h1></p>
+        </div>
+    </div>
+
+     <div class="materia-card" style="display: block; width: 100%; background: linear-gradient(135deg, var(--azul-marino), var(--azul-profundo));">
+        <div class="materia-celda-txt" style="display: block; width: 100%; padding: 30px; text-align: justify;">
+            <span class="horas-tag" style="margin-bottom: 10px;">Docente Técnico</span>
+            <h4 style="font-size: 22px; margin: 0; color: var(--blanco-puro);">Prof. Edi Pastor</h4>
+            <p></h1>ocente especialozado en el area de Electricidad,docente decidido a enseñar y guiar a los estudiantes de la carrera de Electricidad.</p><h1></p>
+        </div>
+    </div>
+
+    </section>
