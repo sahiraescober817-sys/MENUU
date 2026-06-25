@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educación para el Hogar - Instituto José Trinidad Cabañas</title>
+    <style>
+        /* ==========================================================================
+           1. RESETEO DE ESTILOS Y VARIABLES DE DISEÑO (FONDO NEGRO Y AZUL CLARO)
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --azul-profundo-bg: #08121a;
+            --azul-acento: #2a6f97;
+            --azul-claro: #64b5f6;
+            --azul-brillante: #a9d6e5;
+            --gris-oscuro: #0f1316;
+            --carbon-bg: #141a1f;
+            --blanco-puro: #ffffff;
+            --gris-platino: #f1f5f8;
+            --gris-texto: #94a1a8;
+            --card-bg: rgba(20, 26, 31, 0.85);
+            --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            background-color: var(--gris-oscuro);
+            color: var(--gris-platino);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Fondo institucional con capa oscura */
+        .wrapper-institucional {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(180deg, rgba(8, 18, 26, 0.96) 0%, rgba(15, 19, 22, 0.95) 100%), 
+                        url('fondo-hogar.jpg') no-repeat center center fixed;
+            background-size: cover;
+            padding-bottom: 80px;
+        }
+
+        .contenedor {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* ==========================================================================
+           2. BARRA DE NAVEGACIÓN STICKY & DROPDOWN
+           ========================================================================== */
+        nav {
+            background: var(--azul-profundo-bg);
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+            border-bottom: 2px solid var(--azul-acento);
+        }
+
+        .nav-contenedor {
+            max-width: 1200px;
+            margin: auto;
+            display: block;
+        }
+
+        .menu {
+            list-style: none;
+            display: block;
+            text-align: center;
+        }
+
+        .menu > li {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu li a {
+            color: var(--blanco-puro);
+            text-decoration: none;
+            padding: 22px 24px;
+            display: block;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+        }
+
+        .menu > li > a:hover {
+            background: var(--azul-acento);
+            color: var(--blanco-puro);
+        }
+
+        .flecha::after {
+            content: ' ▼';
+            font-size: 10px;
+            color: var(--azul-claro);
+            vertical-align: middle;
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--carbon-bg);
+            min-width: 250px;
+            list-style: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border-bottom: 3px solid var(--azul-acento);
+            border-radius: 0 0 8px 8px;
+            text-align: left;
+        }
+
+        .submenu li a {
+            padding: 15px 20px;
+            font-weight: 500;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .submenu li a:hover {
+            background: var(--azul-profundo-bg);
+            color: var(--azul-claro);
+            padding-left: 28px;
+        }
+
+        .menu li:hover .submenu {
+            display: block;
+        }
+
+        /* ==========================================================================
+           3. ENCABEZADO E INTRODUCCIÓN ADECUADA A LA EDAD
+           ========================================================================== */
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 30px;
+        }
+
+        .hero h2 {
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--gris-texto);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
+            color: var(--azul-claro);
+            text-shadow: 0 0 15px rgba(100, 181, 246, 0.3);
+        }
+
+        .grado-badge {
+            display: inline-block;
+            background: rgba(42, 111, 151, 0.2);
+            border: 1px solid var(--azul-acento);
+            color: var(--azul-claro);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .intro-container {
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 16px;
+            border-left: 5px solid var(--azul-acento);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 50px;
+        }
+
+        .intro-container p {
+            margin-bottom: 15px;
+            color: var(--gris-platino);
+            font-size: 15.5px;
+            text-align: justify;
+        }
+
+        .intro-container p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ==========================================================================
+           4. SECCIÓN ASIGNATURAS EN ZIG-ZAG
+           ========================================================================== */
+        .titulo-seccion {
+            text-align: center;
+            font-size: 28px;
+            color: var(--blanco-puro);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .titulo-seccion::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--azul-acento);
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .materia-card {
+            display: table;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 16px;
+            margin-bottom: 35px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: var(--transition-smooth);
+        }
+
+        .materia-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(100, 181, 246, 0.25);
+        }
+
+        .materia-fila {
+            display: table-row;
+        }
+
+        .materia-celda-img, .materia-celda-txt {
+            display: table-cell;
+            vertical-align: middle;
+            width: 50%;
+        }
+
+        .materia-celda-img {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px 0 0 16px;
+            background: #0d1216;
+            height: 340px;
+        }
+
+        .materia-card.zig-reverse .materia-celda-img {
+            border-radius: 0 16px 16px 0;
+        }
+
+        .materia-img {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition-smooth);
+        }
+
+        .materia-card:hover .materia-img {
+            transform: scale(1.03);
+        }
+
+        .materia-celda-txt {
+            padding: 35px;
+        }
+
+        .materia-celda-txt h4 {
+            font-size: 22px;
+            color: var(--blanco-puro);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .horas-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--azul-acento), var(--azul-profundo-bg));
+            border: 1px solid var(--azul-claro);
+            color: var(--blanco-puro);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 50px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .materia-desc {
+            color: var(--gris-platino);
+            font-size: 14.5px;
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .competencias-box {
+            background: rgba(8, 18, 26, 0.4);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--azul-claro);
+        }
+
+        .competencias-box h5 {
+            color: var(--azul-claro);
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .competencias-box ul {
+            list-style: none;
+        }
+
+        .competencias-box ul li {
+            font-size: 13.5px;
+            color: var(--gris-texto);
+            margin-bottom: 4px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .competencias-box ul li::before {
+            content: "▪";
+            color: var(--azul-acento);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .competencias-box ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ==========================================================================
+           5. SECCIÓN PERFIL DEL ESTUDIANTE
+           ========================================================================== */
+        .perfil-container {
+            background: linear-gradient(135deg, var(--carbon-bg), var(--azul-profundo-bg));
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(42, 111, 151, 0.2);
+            text-align: center;
+        }
+
+        .perfil-container p {
+            font-size: 15.5px;
+            max-width: 750px;
+            margin: 0 auto 30px auto;
+            color: var(--gris-platino);
+        }
+
+        .perfil-grid {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 15px;
+        }
+
+        .perfil-fila {
+            display: table-row;
+        }
+
+        .perfil-item {
+            display: table-cell;
+            background: rgba(15, 19, 22, 0.5);
+            padding: 20px 15px;
+            border-radius: 10px;
+            border-bottom: 3px solid var(--azul-acento);
+            transition: var(--transition-smooth);
+            vertical-align: middle;
+        }
+
+        .perfil-item:hover {
+            transform: translateY(-4px);
+            background: rgba(42, 111, 151, 0.12);
+            border-bottom-color: var(--azul-claro);
+        }
+
+        .perfil-item h5 {
+            color: var(--blanco-puro);
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* ==========================================================================
+           6. RESPONSIVIDAD
+           ========================================================================== */
+        @media (max-width: 992px) {
+            .materia-celda-img, .materia-celda-txt { display: block; width: 100%; }
+            .materia-celda-img { border-radius: 16px 16px 0 0 !important; height: auto; }
+            .materia-img { height: 250px; }
+            .materia-celda-txt { padding: 25px; }
+            .perfil-grid, .perfil-fila { display: block; }
+            .perfil-item { display: block; width: 100%; margin-bottom: 12px; }
+        }
+
+        @media (max-width: 768px) {
+            .menu { display: none; }
+            .hero h1 { font-size: 28px; }
+            .intro-container { padding: 20px; }
+            .perfil-container { padding: 25px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper-institucional">
+<nav>
+        <ul class="menu">
+            <li><a href="MENUU.html">Inicio</a></li>
+            <li><a href="Quienes somos.html">Quiénes Somos</a></li>
+            <li>
+                <a href="#">Carreras <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="Informatica.html">Informática</a></li>
+                    <li><a href="electricidad.html">Electricidad</a></li>
+                    <li><a href="humanidades.html">Ciencias y Humanidades</a></li>
+                    <li><a href="finanzas.html">Contaduría y Finanzas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Áreas Técnicas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="madera.html">Madera</a></li>
+                    <li><a href="Corte Confeccion.html">Costura Hogar</a></li>
+                    <li><a href="Electricidad Area.html">Electricidad</a></li>
+                    <li><a href="Estructuras Metalicas.html">Estructuras Metálicas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Jornadas <span class="flecha"></span></a>
+                <ul class="submenu">
+                    <li><a href="matutina.html">Matutina</a></li>
+                    <li><a href="vespertina.html">Vespertina</a></li>
+                    <li><a href="nocturna.html">Nocturna</a></li>
+                    <li><a href="isemed.html">ISEMED</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+
+        <div class="contenedor">
+
+            <header class="hero">
+                <h2>Instituto José Trinidad Cabañas (Olanchito, Yoro)</h2>
+                <h1>Área Técnica de <span>Hogar</span></h1>
+                <div class="grado-badge">Tercer Ciclo: 7mo, 8vo y 9no Grado</div>
+            </header>
+
+            <section class="intro-container">
+                <p>El área de Educación para el Hogar está diseñada para brindar a los estudiantes competencias prácticas fundamentales para la vida diaria y el desarrollo de la autonomía personal. El taller se divide de manera integral en dos grandes disciplinas básicas: el arte de la confección textil y los fundamentos culinarios.</p>
+                <p>A través de proyectos dinámicos y guiados, los alumnos de tercer ciclo aprenden el uso seguro de utensilios, la planificación de recursos, la importancia de la nutrición y el valor del trabajo hecho a mano. Estas prácticas fomentan la creatividad, la organización y el trabajo en equipo, preparando a los jóvenes tanto para el ámbito familiar como para futuros emprendimientos locales.</p>
+            </section>
+
+            <section>
+                <h3 class="titulo-seccion">Módulos de Corte y Confección</h3>
+
+                <div class="materia-card">
+                    <div class="materia-fila">
+                        <div class="materia-celda-img">
+                            <img class="materia-img" src="C:\Users\nancy\OneDrive\Imágenes\puntadas.webp">
+                        </div>
+                        <div class="materia-celda-txt">
+                            <span class="horas-tag">12 Horas Semanales</span>
+                            <h4>Puntadas Básicas y Costura Manual</h4>
+                            <p class="materia-desc">Introducción al manejo de agujas, hilos y telas. Los alumnos aprenden los puntos de sutura tradicionales hechos a mano para hilvanar, reparar prendas y pegar botones correctamente.</p>
+                            <div class="competencias-box">
+                                <h5>Competencias que desarrolla:</h5>
+                                <ul>
+                                    <li>Dominio de puntadas esenciales (hilván, pespunte y dobladillo).</li>
+                                    <li>Coordinación motriz fina y paciencia en el manejo de textiles.</li>
+                                    <li>Reparación y mantenimiento básico de prendas de vestir cotidianas.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="materia-card zig-reverse">
+                    <div class="materia-fila">
+                        <div class="materia-celda-txt">
+                            <span class="horas-tag">12 Horas Semanales</span>
+                            <h4>Uso Seguro de la Máquina de Coser</h4>
+                            <p class="materia-desc">Reconocimiento de las partes de la máquina de coser familiar y prácticas guiadas para dominar el enhebrado, el llenado de bobinas y el control del pedal en líneas rectas.</p>
+                            <div class="competencias-box">
+                                <h5>Competencias que desarrolla:</h5>
+                                <ul>
+                                    <li>Operación segura y mantenimiento preventivo de la máquina.</li>
+                                    <li>Control de velocidad para realizar costuras uniformes.</li>
+                                    <li>Prevención de riesgos asociados al uso del equipo de costura.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="materia-celda-img">
+                            <img class="materia-img" src="C:\Users\nancy\OneDrive\Imágenes\coser.jpg">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="materia-card">
+                    <div class="materia-fila">
+                        <div class="materia-celda-img">
+                            <img class="materia-img" src="C:\Users\nancy\OneDrive\Imágenes\cojines.jpg">
+                        </div>
+                        <div class="materia-celda-txt">
+                            <span class="horas-tag">12 Horas Semanales</span>
+                            <h4>Confección de Artículos Menores</h4>
+                            <p class="materia-desc">Aplicación de los conocimientos en el trazado de patrones sencillos sobre tela para cortar y confeccionar artículos utilitarios del hogar, tales como gabachas, manteles o almohadones.</p>
+                            <div class="competencias-box">
+                                <h5>Competencias que desarrolla:</h5>
+                                <ul>
+                                    <li>Toma de medidas básicas y distribución eficiente de moldes.</li>
+                                    <li>Ensamble ordenado de piezas textiles cuadradas y rectas.</li>
+                                    <li>Presentación de acabados estéticos y limpios en los bordes.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="titulo-seccion" style="margin-top: 60px;">Módulos de Cocina y Nutrición</h3>
+
+                <div class="materia-card zig-reverse">
+                    <div class="materia-fila">
+                        <div class="materia-celda-txt">
+                            <span class="horas-tag">12 Horas Semanales</span>
+                            <h4>Higiene y Seguridad Alimentaria</h4>
+                            <p class="materia-desc">Estudio obligatorio sobre las normas sanitarias en la cocina, el lavado correcto de manos, la desinfección de alimentos y la prevención de quemaduras o accidentes con cuchillos.</p>
+                            <div class="competencias-box">
+                                <h5>Competencias que desarrolla:</h5>
+                                <ul>
+                                    <li>Mantener el área de preparación impecable y libre de bacterias.</li>
+                                    <li>Manejo seguro y correcto de los utensilios de corte y calor.</li>
+                                    <li>Hábitos rigurosos de orden y limpieza personal dentro del taller.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="materia-celda-img">
+                            <img class="materia-img" src="C:\Users\nancy\OneDrive\Imágenes\higiene.jpeg">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="materia-card">
+                    <div class="materia-fila">
+                        <div class="materia-celda-img">
+                            <img class="materia-img" src="C:\Users\nancy\OneDrive\Imágenes\comida.jpeg">
+                        </div>
+                        <div class="materia-celda-txt">
+                            <span class="horas-tag">12 Horas Semanales</span>
+                            <h4>Técnicas Básicas de Cocina</h4>
+                            <p class="materia-desc">Prácticas elementales de medición de ingredientes (tazas, cucharadas) y elaboración de recetas sencillas que no requieran técnicas complejas, como ensaladas, aderezos y meriendas saludables.</p>
+                            <div class="competencias-box">
+                                <h5>Competencias que desarrolla:</h5>
+                                <ul>
+                                    <li>Interpretación y seguimiento ordenado de recetas paso a paso.</li>
+                                    <li>Uso preciso de balanzas y tazas medidoras.</li>
+                                    <li>Identificación fresca y balanceada de los grupos alimenticios.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="materia-card zig-reverse">
+                    <div class="materia-fila">
+                        <div class="materia-celda-txt">
+                            <span class="horas-tag">12 Horas Semanales</span>
+                            <h4>Repostería y Panadería Básica</h4>
+                            <p class="materia-desc">Introducción al horneado casero mediante la preparación de masas simples, galletas, panecillos tradicionales o panqueques, enfocándose en la química básica de los leudantes.</p>
+                            <div class="competencias-box">
+                                <h5>Competencias que desarrolla:</h5>
+                                <ul>
+                                    <li>Mezclado correcto de ingredientes secos y líquidos.</li>
+                                    <li>Monitoreo y control del tiempo y temperatura del horno escolar.</li>
+                                    <li>Presentación atractiva y porcionado equitativo del producto final.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="materia-celda-img">
+                            <img class="materia-img" src="C:\Users\nancy\OneDrive\Imágenes\pastel.jpeg">
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+<section style="margin-top: 60px;">
+    <h2 class="titulo-seccion">Personal Docente</h2>
+
+    <div class="materia-card" style="display: block; width: 100%; background: linear-gradient(135deg, var(--azul-marino), var(--azul-profundo));">
+        <div class="materia-celda-txt" style="display: block; width: 100%; padding: 30px; text-align: justify;">
+            <span class="horas-tag" style="margin-bottom: 10px;">Docente Técnico</span>
+            <h4 style="font-size: 22px; margin: 0; color: var(--blanco-puro);">Prof. Isabel Reyes</h4>
+            <p></h1>Docente especialozada en el area de Corte y Confeccion,docente decidida a enseñar y guiar a los estudiantes de el area de Corte y Confeccion.</p><h1></p>
+        </div>
+    </div>
+
+     <div class="materia-card" style="display: block; width: 100%; background: linear-gradient(135deg, var(--azul-marino), var(--azul-profundo));">
+        <div class="materia-celda-txt" style="display: block; width: 100%; padding: 30px; text-align: justify;">
+            <span class="horas-tag" style="margin-bottom: 10px;">Docente Técnico</span>
+            <h4 style="font-size: 22px; margin: 0; color: var(--blanco-puro);">Prof. Francis</h4>
+            <p></h1>Docente especialozada en el area de Cocina,docente decidida a enseñar y guiar a los estudiantes de el area de Cocina.</p><h1></p>
+        </div>
+    </div>
+</section>
+        </div> </div> </body>
+</html>
